@@ -27,6 +27,7 @@ namespace Salon.Models
         [Display(Name = "Адрес")]
         public string? Address { get; set; }
 
+        [Display(Name = "ФИО")]
         public string? FIO
         {
             get

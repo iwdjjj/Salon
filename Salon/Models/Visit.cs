@@ -15,7 +15,7 @@ namespace Salon.Models
 
         [Display(Name = "Услуга")]
         public int? ServiceId { get; set; }
-        [Display(Name = "Клиент")]
+        [Display(Name = "Услуга")]
         public virtual Service? Service { get; set; }
 
         [Display(Name = "Сотрудник")]

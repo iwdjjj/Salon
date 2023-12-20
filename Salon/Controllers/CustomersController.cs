@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ namespace Salon.Controllers
         }
 
         // GET: Customers
+        [Authorize(Roles = "Administrator,Guest")]
         public async Task<IActionResult> Index()
         {
               return _context.Customers != null ? 
@@ -28,6 +30,7 @@ namespace Salon.Controllers
         }
 
         // GET: Customers/Details/5
+        [Authorize(Roles = "Administrator,Guest")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Customers == null)
@@ -46,6 +49,7 @@ namespace Salon.Controllers
         }
 
         // GET: Customers/Create
+        [Authorize(Roles = "Administrator,Guest")]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +58,7 @@ namespace Salon.Controllers
         // POST: Customers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator,Guest")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CustomerId,Surname,Name,Midname,Phone,Address")] Customer customer)
@@ -68,6 +73,7 @@ namespace Salon.Controllers
         }
 
         // GET: Customers/Edit/5
+        [Authorize(Roles = "Administrator,Guest")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Customers == null)
@@ -86,6 +92,7 @@ namespace Salon.Controllers
         // POST: Customers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator,Guest")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CustomerId,Surname,Name,Midname,Phone,Address")] Customer customer)
@@ -119,6 +126,7 @@ namespace Salon.Controllers
         }
 
         // GET: Customers/Delete/5
+        [Authorize(Roles = "Administrator,Guest")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Customers == null)
@@ -137,6 +145,7 @@ namespace Salon.Controllers
         }
 
         // POST: Customers/Delete/5
+        [Authorize(Roles = "Administrator,Guest")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

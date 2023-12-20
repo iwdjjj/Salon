@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Salon.Models.Visit_CountOtchet>
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Index";
+}
+@using (Html.BeginForm("Import","Otchet", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm-excel" }))
+{
+    <div class="any">
+	    Импорт Excel-файла для таблицы "Посещения"
+        <div>
+                <input type="file" name="fileExcel" id="fileExcel">
+        </div>
+   
+        <div>
+            <input class="btn btn-primary newinput" type="submit" style="margin-top:20px" value=" Загрузить">
+        </div>
+    </div>
+}
+<div class="any d-flex justify-content-between" style="margin-top:20px">
+    <a asp-action="Export" asp-route-id="@ViewBag.StudentId" class="btn btn-outline-primary newinputsec">Cоздать отчёт</a>
+    <a asp-action="Export2" class="btn btn-primary newinput">Экспорт таблицы "Посещения" в Excel</a>
+</div>

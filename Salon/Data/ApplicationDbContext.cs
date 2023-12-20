@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Salon.Models;
 
 namespace Salon.Data
@@ -20,5 +21,17 @@ namespace Salon.Data
 
         public DbSet<CustomUser> CustomUsers { get; set; }
         public DbSet<Doljnost> Doljnosts { get; set; }
+
+        public DbSet<Visit_CountOtchet> Visit_CountOtchet { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Group>().ToTable(tb => tb.HasTrigger("Check_Group"));
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Service>().ToTable(tb => tb.HasTrigger("AddDelCount"));
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Service>().ToTable(tb => tb.HasTrigger("UpdCount"));
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

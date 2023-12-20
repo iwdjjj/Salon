@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ namespace Salon.Controllers
         }
 
         // GET: Visits
+        [Authorize(Roles = "Administrator,Guest")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Visits.Include(v => v.Customer).Include(v => v.Employee).Include(v => v.Service);
@@ -27,6 +29,7 @@ namespace Salon.Controllers
         }
 
         // GET: Visits/Details/5
+        [Authorize(Roles = "Administrator,Guest")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Visits == null)
@@ -48,10 +51,11 @@ namespace Salon.Controllers
         }
 
         // GET: Visits/Create
+        [Authorize(Roles = "Administrator,Guest")]
         public IActionResult Create()
         {
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Address");
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "Address");
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "FIO");
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "FIO");
             ViewData["ServiceId"] = new SelectList(_context.Services, "ServiceId", "ServiceName");
             return View();
         }
@@ -59,6 +63,7 @@ namespace Salon.Controllers
         // POST: Visits/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator,Guest")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("VisitId,CustomerId,ServiceId,EmployeeId,VisitDate")] Visit visit)
@@ -69,13 +74,14 @@ namespace Salon.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Address", visit.CustomerId);
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "Address", visit.EmployeeId);
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "FIO", visit.CustomerId);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "FIO", visit.EmployeeId);
             ViewData["ServiceId"] = new SelectList(_context.Services, "ServiceId", "ServiceName", visit.ServiceId);
             return View(visit);
         }
 
         // GET: Visits/Edit/5
+        [Authorize(Roles = "Administrator,Guest")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Visits == null)
@@ -88,8 +94,8 @@ namespace Salon.Controllers
             {
                 return NotFound();
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Address", visit.CustomerId);
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "Address", visit.EmployeeId);
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "FIO", visit.CustomerId);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "FIO", visit.EmployeeId);
             ViewData["ServiceId"] = new SelectList(_context.Services, "ServiceId", "ServiceName", visit.ServiceId);
             return View(visit);
         }
@@ -97,6 +103,7 @@ namespace Salon.Controllers
         // POST: Visits/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator,Guest")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("VisitId,CustomerId,ServiceId,EmployeeId,VisitDate")] Visit visit)
@@ -126,13 +133,14 @@ namespace Salon.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "Address", visit.CustomerId);
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "Address", visit.EmployeeId);
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "CustomerId", "FIO", visit.CustomerId);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "FIO", visit.EmployeeId);
             ViewData["ServiceId"] = new SelectList(_context.Services, "ServiceId", "ServiceName", visit.ServiceId);
             return View(visit);
         }
 
         // GET: Visits/Delete/5
+        [Authorize(Roles = "Administrator,Guest")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Visits == null)
@@ -154,6 +162,7 @@ namespace Salon.Controllers
         }
 
         // POST: Visits/Delete/5
+        [Authorize(Roles = "Administrator,Guest")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

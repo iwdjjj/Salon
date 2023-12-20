@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ namespace Salon.Controllers
         }
 
         // GET: Employees
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Employees.Include(e => e.Job);
@@ -27,6 +29,7 @@ namespace Salon.Controllers
         }
 
         // GET: Employees/Details/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Employees == null)
@@ -46,6 +49,7 @@ namespace Salon.Controllers
         }
 
         // GET: Employees/Create
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             ViewData["JobId"] = new SelectList(_context.Jobs, "JobId", "JobName");
@@ -55,6 +59,7 @@ namespace Salon.Controllers
         // POST: Employees/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("EmployeeId,Surname,Name,Midname,JobId,Phone,Address,EmpDate")] Employee employee)
@@ -70,6 +75,7 @@ namespace Salon.Controllers
         }
 
         // GET: Employees/Edit/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Employees == null)
@@ -89,6 +95,7 @@ namespace Salon.Controllers
         // POST: Employees/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("EmployeeId,Surname,Name,Midname,JobId,Phone,Address,EmpDate")] Employee employee)
@@ -123,6 +130,7 @@ namespace Salon.Controllers
         }
 
         // GET: Employees/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Employees == null)
@@ -142,6 +150,7 @@ namespace Salon.Controllers
         }
 
         // POST: Employees/Delete/5
+        [Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

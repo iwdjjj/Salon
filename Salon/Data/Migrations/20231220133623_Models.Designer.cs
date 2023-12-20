@@ -12,7 +12,7 @@ using Salon.Data;
 namespace Salon.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231113160032_Models")]
+    [Migration("20231220133623_Models")]
     partial class Models
     {
         /// <inheritdoc />
@@ -336,12 +336,17 @@ namespace Salon.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GroupName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Services_Count")
+                        .HasColumnType("int");
 
                     b.HasKey("GroupId");
 
-                    b.ToTable("Groups");
+                    b.ToTable("Groups", t =>
+                        {
+                            t.HasTrigger("Check_Group");
+                        });
                 });
 
             modelBuilder.Entity("Salon.Models.Job", b =>
@@ -399,7 +404,12 @@ namespace Salon.Data.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("Services");
+                    b.ToTable("Services", t =>
+                        {
+                            t.HasTrigger("AddDelCount");
+
+                            t.HasTrigger("UpdCount");
+                        });
                 });
 
             modelBuilder.Entity("Salon.Models.Visit", b =>
@@ -431,6 +441,20 @@ namespace Salon.Data.Migrations
                     b.HasIndex("ServiceId");
 
                     b.ToTable("Visits");
+                });
+
+            modelBuilder.Entity("Salon.Models.Visit_CountOtchet", b =>
+                {
+                    b.Property<int?>("id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("kol")
+                        .HasColumnType("int");
+
+                    b.Property<string>("nm")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("Visit_CountOtchet");
                 });
 
             modelBuilder.Entity("Salon.Models.CustomUser", b =>

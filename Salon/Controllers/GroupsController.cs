@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -46,6 +47,7 @@ namespace Salon.Controllers
         }
 
         // GET: Groups/Create
+        [Authorize(Roles = "Administrator,Guest")]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +56,7 @@ namespace Salon.Controllers
         // POST: Groups/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator,Guest")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("GroupId,GroupName,Description")] Group @group)
@@ -68,6 +71,7 @@ namespace Salon.Controllers
         }
 
         // GET: Groups/Edit/5
+        [Authorize(Roles = "Administrator,Guest")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Groups == null)
@@ -86,6 +90,7 @@ namespace Salon.Controllers
         // POST: Groups/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator,Guest")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("GroupId,GroupName,Description")] Group @group)
@@ -119,6 +124,7 @@ namespace Salon.Controllers
         }
 
         // GET: Groups/Delete/5
+        [Authorize(Roles = "Administrator,Guest")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Groups == null)
@@ -139,6 +145,7 @@ namespace Salon.Controllers
         // POST: Groups/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator,Guest")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Groups == null)

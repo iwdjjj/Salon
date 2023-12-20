@@ -23,7 +23,7 @@ namespace Salon.Models
         [Required(ErrorMessage = "Укажите должность")]
         [Display(Name = "Должность")]
         public int? JobId { get; set; }
-        [Display(Name = "Группа услуг")]
+        [Display(Name = "Должность")]
         public virtual Job? Job { get; set; }
 
         [Display(Name = "Номер телефона")]
@@ -34,8 +34,10 @@ namespace Salon.Models
         public string? Address { get; set; }
 
         [Display(Name = "Дата приема на работу")]
+        [DataType(DataType.Date)]
         public DateTime? EmpDate { get; set; }
 
+        [Display(Name = "ФИО")]
         public string? FIO
         {
             get

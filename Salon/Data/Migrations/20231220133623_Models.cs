@@ -78,12 +78,25 @@ namespace Salon.Data.Migrations
                 {
                     GroupId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GroupName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    GroupName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Services_Count = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Groups", x => x.GroupId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Visit_CountOtchet",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: true),
+                    nm = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    kol = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
                 });
 
             migrationBuilder.CreateTable(
@@ -236,6 +249,9 @@ namespace Salon.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Doljnosts");
+
+            migrationBuilder.DropTable(
+                name: "Visit_CountOtchet");
 
             migrationBuilder.DropTable(
                 name: "Visits");

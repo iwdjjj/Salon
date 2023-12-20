@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ namespace Salon.Controllers
         }
 
         // GET: Jobs
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Jobs.Include(j => j.Group);
@@ -27,6 +29,7 @@ namespace Salon.Controllers
         }
 
         // GET: Jobs/Details/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Jobs == null)
@@ -46,6 +49,7 @@ namespace Salon.Controllers
         }
 
         // GET: Jobs/Create
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             ViewData["GroupId"] = new SelectList(_context.Groups, "GroupId", "GroupName");
@@ -55,6 +59,7 @@ namespace Salon.Controllers
         // POST: Jobs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("JobId,JobName,GroupId,Schedule")] Job job)
@@ -70,6 +75,7 @@ namespace Salon.Controllers
         }
 
         // GET: Jobs/Edit/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Jobs == null)
@@ -89,6 +95,7 @@ namespace Salon.Controllers
         // POST: Jobs/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("JobId,JobName,GroupId,Schedule")] Job job)
@@ -123,6 +130,7 @@ namespace Salon.Controllers
         }
 
         // GET: Jobs/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Jobs == null)
@@ -142,6 +150,7 @@ namespace Salon.Controllers
         }
 
         // POST: Jobs/Delete/5
+        [Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
